@@ -38,13 +38,72 @@
     }
     .section {
       padding: 4rem 2rem;
-      max-width: 900px;
+      max-width: 1000px;
       margin: auto;
+    }
+    .project-card {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      border-left: 4px solid #3b82f6;
+    }
+    .project-title {
+      color: #1f2937;
+      margin-bottom: 1rem;
+    }
+    .project-description {
+      color: #6b7280;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    .demo-buttons {
+      display: flex;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .btn-primary {
+      background-color: #3b82f6;
+      color: white;
+    }
+    .btn-primary:hover {
+      background-color: #2563eb;
+    }
+    .btn-secondary {
+      background-color: #6b7280;
+      color: white;
+    }
+    .btn-secondary:hover {
+      background-color: #4b5563;
     }
     iframe {
       width: 100%;
-      height: 800px;
+      height: 700px;
       border: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .tech-stack {
+      display: flex;
+      gap: 0.5rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+    .tech-tag {
+      background-color: #e5e7eb;
+      color: #374151;
+      padding: 0.25rem 0.75rem;
+      border-radius: 16px;
+      font-size: 0.875rem;
+      font-weight: 500;
     }
     footer {
       background-color: #1f2937;
@@ -58,23 +117,97 @@
 <body>
   <header>
     <h1>Archana Purushothaman</h1>
-    <p>Projects</p>
+    <p>Interactive Research Projects & Tools</p>
   </header>
-
   <nav>
     <a href="index.html">Home</a>
     <a href="Skills.html">CV</a>
     <a href="project.html">Projects</a>
   </nav>
-
+  
   <div class="section" id="projects">
-    <h2>Interactive Project</h2>
-    <p>Explore chemical abundance evolution in pre-supernova models using interactive mass-coordinate plots.</p>
-    <iframe src="https://your-dash-app-url.onrender.com"></iframe>
-  </div>
+    <div class="project-card">
+      <h2 class="project-title">🌟 Gamma-ray Cross-Matching Tool</h2>
+      <p class="project-description">
+        Interactive demonstration of statistical cross-matching methods for identifying spatial correlations 
+        between gamma-ray sources and stellar populations. This tool implements the methodology from our 
+        published research on young massive star clusters as potential GeV gamma-ray emitters.
+      </p>
+      
+      <div class="tech-stack">
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">Streamlit</span>
+        <span class="tech-tag">Astropy</span>
+        <span class="tech-tag">Monte Carlo</span>
+        <span class="tech-tag">Statistical Analysis</span>
+      </div>
+      
+      <div class="demo-buttons">
+        <a href="YOUR_STREAMLIT_URL_HERE" class="btn btn-primary" target="_blank">🚀 Try Interactive Demo</a>
+        <a href="https://github.com/YOUR_GITHUB/gamma-ray-crossmatch" class="btn btn-secondary" target="_blank">📊 View Code</a>
+      </div>
+      
+      <h3>Key Features:</h3>
+      <ul>
+        <li><strong>Interactive sky maps</strong> showing source distributions and correlations</li>
+        <li><strong>Monte Carlo significance testing</strong> with customizable parameters</li>
+        <li><strong>Real-time analysis</strong> of uploaded catalogs or sample data</li>
+        <li><strong>Statistical visualization</strong> of correlation significance</li>
+        <li><strong>Downloadable results</strong> in CSV format</li>
+      </ul>
+      
+      <p><em>Based on: Peron, Morlino, Gabici, Amato, <strong>Purushothaman</strong>, and Brusa (2024), 
+      "On the correlation between young massive star clusters and gamma-ray unassociated sources", ApJ Letters</em></p>
+    </div>
+    
+    <!-- You can add more project cards here -->
+    <div class="project-card">
+      <h2 class="project-title">🔬 JWST Protostellar Jets Analysis</h2>
+      <p class="project-description">
+        Custom Python workflows for processing JWST MIRI Medium Resolution Spectrometer (MRS) and NIRSpec data cubes 
+        of the Class I protostar L1448 IRS-1, investigating jet feedback and shock chemistry through emission line diagnostics.
+      </p>
+      
+      <div class="tech-stack">
+        <span class="tech-tag">JWST Pipeline</span>
+        <span class="tech-tag">MIRI</span>
+        <span class="tech-tag">NIRSpec</span>
+        <span class="tech-tag">Spectroscopy</span>
+      </div>
+      
+      <div class="demo-buttons">
+        <a href="#" class="btn btn-secondary">📈 Analysis Coming Soon</a>
+      </div>
+    </div>
 
+    <div class="project-card">
+      <h2 class="project-title">💫 Supernova Dust Formation Models</h2>
+      <p class="project-description">
+        Statistical analysis of dust formation in core-collapse supernovae using progenitor models spanning 8–120 M☉ 
+        to investigate the upper limits of post-explosion dust yields from stellar evolution models.
+      </p>
+      
+      <div class="tech-stack">
+        <span class="tech-tag">MESA</span>
+        <span class="tech-tag">Statistical Modeling</span>
+        <span class="tech-tag">Data Visualization</span>
+      </div>
+      
+      <div class="demo-buttons">
+        <a href="#" class="btn btn-secondary">🔬 Research Repository</a>
+      </div>
+    </div>
+
+    <!-- Embedded Demo Section -->
+    <div class="project-card">
+      <h2 class="project-title">🎮 Live Demo</h2>
+      <p>Try the interactive gamma-ray cross-matching tool directly below:</p>
+      <iframe src="YOUR_STREAMLIT_URL_HERE"></iframe>
+    </div>
+  </div>
+  
   <footer>
-    <p>&copy; 2025 Archana Purushothaman</p>
+    <p>&copy; 2025 Archana Purushothaman | Astrophysics PhD Candidate</p>
   </footer>
 </body>
 </html>
