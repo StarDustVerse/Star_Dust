@@ -92,7 +92,7 @@ st.set_page_config(layout="wide")
 st.markdown("### 💥 Core Collapse Supernova Simulation")
 
 
-col1, col2 , col3 = st.columns(3)
+col1, col2 = st.columns(2)
 
 with col1:
     num_layers = st.slider("Number of Layers", 2, 10, 5)
@@ -100,12 +100,14 @@ with col1:
 with col2:
     speed = st.slider("Speed (ms)", 10, 200, 50)
 
-with col3:
-    final_frame = st.slider("Simulation Frame to Display", 0, 130, 80)
-
-if st.button("Render Simulation Frame"):
+if st.button("▶️ Play Full Simulation"):
+    placeholder = st.empty()
     sim = ZoneLayerSupernova(num_layers=num_layers)
-    fig = sim.draw_final_frame(final_frame)
-    st.pyplot(fig)
+
+    for frame in range(0, 131):  # frames 0 to 130
+        fig = sim.draw_final_frame(frame)
+        placeholder.pyplot(fig, use_container_width=True)
+        plt.clf()  # Clear previous figure from cache
+        time.sleep(speed / 1000.0)
 
 
