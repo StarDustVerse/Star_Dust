@@ -101,11 +101,11 @@ st.markdown("### 💥 Core Collapse Supernova Simulation")
 col1, col2 = st.columns(2)
 
 with col1:
-    num_layers = st.slider("Layers", 2, 10, 5, label_visibility="collapsed")
+    num_layers = st.slider("Layers", 2, 10, 5)
 
 
 with col2:
-    speed = st.slider("Speed (ms)", 10, 200, 50, label_visibility="collapsed")
+    speed = st.slider("Speed (ms)", 10, 200, 50)
 
 
 if st.button("▶️ Play"):
@@ -115,6 +115,7 @@ if st.button("▶️ Play"):
     for f in range(0, 181, 20):  # auto-play frames without assigning 'frame'
         placeholder.pyplot(sim.draw_final_frame(f), use_container_width=True)
         time.sleep(speed / 1000.0)
+
 
 
 
