@@ -130,7 +130,7 @@ def create_sky_map(matches_df, gamma_cat, source_cat):
 
 def generate_sample_data():
     #"""Generate sample gamma-ray and stellar catalogs"""
-    p.random.seed(42)  # For reproducible results
+    np.random.seed(42)  # For reproducible results
     
     # Sample gamma-ray catalog (Fermi-LAT like)
     n_gamma = 50
@@ -328,5 +328,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
