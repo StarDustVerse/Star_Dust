@@ -105,9 +105,9 @@ if st.button("▶️ Play Full Simulation"):
     sim = ZoneLayerSupernova(num_layers=num_layers)
 
     for frame in range(0, 131):  # frames 0 to 130
-        fig = sim.draw_final_frame(frame)
-        placeholder.pyplot(fig, use_container_width=True)
-        plt.clf()  # Clear previous figure from cache
+        sim.update_layers(frame)  # just update state
+        placeholder.pyplot(sim.fig, use_container_width=True)
         time.sleep(speed / 1000.0)
+
 
 
