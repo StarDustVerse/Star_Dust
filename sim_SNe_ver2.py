@@ -106,10 +106,11 @@ if st.button("▶️ Play Simulation"):
     placeholder = st.empty()
     sim = ZoneLayerSupernova(num_layers=num_layers)
 
-    for frame in range(0, 181, 20):   # frames 0 to 180
+    for frame in range(0, 181, 8):   # frames 0 to 180
         fig = sim.draw_final_frame(frame)
         placeholder.pyplot(fig)
         time.sleep(0.05)  
+
 
 
 
