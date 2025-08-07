@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.animation as animation
+import time
 
 class ZoneLayerSupernova:
     def __init__(self, width=800, height=600, num_layers=5):
@@ -108,6 +109,7 @@ if st.button("▶️ Play Full Simulation"):
         sim.update_layers(frame)  # just update state
         placeholder.pyplot(sim.fig, use_container_width=True)
         time.sleep(speed / 1000.0)
+
 
 
 
