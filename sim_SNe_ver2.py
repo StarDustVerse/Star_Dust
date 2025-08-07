@@ -5,7 +5,7 @@ import matplotlib.patches as patches
 import matplotlib.animation as animation
 
 class ZoneLayerSupernova:
-    def __init__(self, width=800, height=600, num_layers=5):
+    def __init__(self, width=200, height=200, num_layers=5):
         self.width = width
         self.height = height
         self.center = (width // 2, height // 2)
@@ -94,10 +94,11 @@ st.title("💥 Supernova Zone Layer Simulation")
 st.markdown("This interactive simulation models the stages of a 1D supernova explosion using concentric layers.")
 
 num_layers = st.slider("Number of Layers", 2, 10, 5)
-final_frame = st.slider("Simulation Frame to Display", 0, 130, 80)
+final_frame = st.slider("Simulation Frame to Display", 0, 360, 180)
 
 if st.button("Render Simulation Frame"):
     sim = ZoneLayerSupernova(num_layers=num_layers)
     fig = sim.draw_final_frame(final_frame)
     st.pyplot(fig)
+
 
