@@ -95,20 +95,26 @@ class ZoneLayerSupernova:
         return self.fig
 
 # --- Streamlit App Layout ---
-st.markdown("### 💥 Supernova Simulation")
+st.markdown("### 💥 Core Collapse Supernova Simulation")
 
-num_layers = st.slider("Layers", 2, 10, 5, label_visibility="collapsed")
-speed = st.slider("Speed (ms)", 10, 200, 50, label_visibility="collapsed")
 
-# Run simulation when play is pressed
+col1, col2 = st.columns(2)
+
+with col1:
+    num_layers = st.slider("Layers", 2, 10, 5, label_visibility="collapsed")
+
+
+with col2:
+    speed = st.slider("Speed (ms)", 10, 200, 50, label_visibility="collapsed")
+
+
 if st.button("▶️ Play"):
     placeholder = st.empty()
     sim = ZoneLayerSupernova(num_layers=num_layers)
 
-    # Internally loop through frames, but don't expose the variable
-    for _ in range(0, 181, 20):  # Play every 20th frame
-        placeholder.pyplot(sim.draw_final_frame(sim.time))
-        sim.time += 20
+    for f in range(0, 181, 20):  # auto-play frames without assigning 'frame'
+        placeholder.pyplot(sim.draw_final_frame(f), use_container_width=True)
         time.sleep(speed / 1000.0)
+
 
 
