@@ -1,7 +1,8 @@
+import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
 import matplotlib.patches as patches
+import matplotlib.animation as animation
 
 class ZoneLayerSupernova:
     def __init__(self, width=800, height=600, num_layers=5):
@@ -15,18 +16,15 @@ class ZoneLayerSupernova:
         self.max_radius = min(width, height) // 2.5
         self.explosion_started = False
 
-        # Distinct zone colors
         self.zone_colors = ["#FFD700", "#FF8C00", "#FF4500", "#8B0000", "#4B0082"]
         self.base_radii = np.linspace(self.max_radius * 0.2, self.max_radius, num_layers)
 
-        # Set up the plot
         self.fig, self.ax = plt.subplots(figsize=(12, 9))
         self.ax.set_xlim(0, width)
         self.ax.set_ylim(0, height)
         self.ax.set_aspect('equal')
         self.ax.set_facecolor('black')
 
-        # Create concentric circle patches
         self.layers = []
         for i in range(num_layers):
             color = self.zone_colors[i % len(self.zone_colors)]
@@ -40,7 +38,6 @@ class ZoneLayerSupernova:
             self.ax.add_patch(circle)
             self.layers.append(circle)
 
-        # Title and info text
         self.title = self.ax.set_title('Supernova Zone Layer Simulation', fontsize=16, color='white')
         self.info_text = self.ax.text(
             0.02, 0.98, '', transform=self.ax.transAxes,
@@ -49,8 +46,6 @@ class ZoneLayerSupernova:
 
     def update_layers(self, frame):
         self.time = frame
-
-        # Reset everything at loop start
         if frame == 0:
             self.explosion_started = False
             for i, circle in enumerate(self.layers):
@@ -86,22 +81,22 @@ class ZoneLayerSupernova:
 
         info = f"Phase: {phase}\nFrame: {frame}"
         self.info_text.set_text(info)
-        return self.layers + [self.info_text]
 
-        def run(self, frames=200, interval=50):
-            self.ani = animation.FuncAnimation(self.fig, self.update_layers, frames=frames,interval=interval, blit=True)
-    
+    def draw_final_frame(self, frame):
+        self.update_layers(frame)
         plt.tight_layout()
-        plt.close(self.fig) 
-        
+        return self.fig
 
-# Run the simulation and save as MP4
-if __name__ == "__main__":
-    print("Starting supernova zone simulation with distinct colors...")
-    sim = ZoneLayerSupernova(width=800, height=600, num_layers=5)
-    sim.run(frames=130, interval=50, save=False)
+# --- Streamlit App ---
+st.set_page_config(layout="wide")
+st.title("💥 Supernova Zone Layer Simulation")
 
+st.markdown("This interactive simulation models the stages of a 1D supernova explosion using concentric layers.")
 
+num_layers = st.slider("Number of Layers", 2, 10, 5)
+final_frame = st.slider("Simulation Frame to Display", 0, 130, 80)
 
-
-
+if st.button("Render Simulation Frame"):
+    sim = ZoneLayerSupernova(num_layers=num_layers)
+    fig = sim.draw_final_frame(final_frame)
+    st.pyplot(fig)
