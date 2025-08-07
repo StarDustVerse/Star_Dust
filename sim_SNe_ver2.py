@@ -112,9 +112,13 @@ if st.button("▶️ Play"):
     placeholder = st.empty()
     sim = ZoneLayerSupernova(num_layers=num_layers)
 
-    for f in range(0, 181, 20):  # auto-play frames without assigning 'frame'
-        placeholder.pyplot(sim.draw_final_frame(f), use_container_width=True)
+    for f in range(0, 181, 10):
+        fig = sim.draw_final_frame(f)
+        placeholder.pyplot(fig, use_container_width=True)
+        plt.clf()  # Clear previous figure
         time.sleep(speed / 1000.0)
+
+
 
 
 
