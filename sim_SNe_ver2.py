@@ -38,7 +38,7 @@ class ZoneLayerSupernova:
             self.ax.add_patch(circle)
             self.layers.append(circle)
 
-        self.title = self.ax.set_title('Supernova Zone Layer Simulation', fontsize=5, color='white')
+        self.title = self.ax.set_title('Core collapse Supernova Simulation', fontsize=5, color='white')
         self.info_text = self.ax.text(
             0.02, 0.98, '', transform=self.ax.transAxes,
             fontsize=10, color='white', verticalalignment='top'
@@ -106,6 +106,7 @@ if st.button("Render Simulation Frame"):
     sim = ZoneLayerSupernova(num_layers=num_layers)
     fig = sim.draw_final_frame(final_frame)
     st.pyplot(fig)
+
 
 
 
