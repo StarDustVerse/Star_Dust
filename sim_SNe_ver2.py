@@ -94,18 +94,22 @@ st.title("💥 Supernova Zone Layer Simulation")
 st.markdown("This interactive simulation models the stages of a 1D supernova explosion using concentric layers.")
 
 
-col1, col2 = st.columns([1, 1])  # Equal width columns (you can tweak to [1, 2], etc.)
+col1, col2, col3 = st.columns([1, 1, 1])
 
 with col1:
     num_layers = st.slider("Number of Layers", 2, 10, 5)
 
 with col2:
     speed = st.slider("Frame Interval (ms)", 10, 200, 50)
+    
+with col3:
+    final_frame = st.slider("Simulation Frame", 0, 180, 100)
 
 if st.button("Render Simulation Frame"):
     sim = ZoneLayerSupernova(num_layers=num_layers)
     fig = sim.draw_final_frame(final_frame)
     st.pyplot(fig)
+
 
 
 
