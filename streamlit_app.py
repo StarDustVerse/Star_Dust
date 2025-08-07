@@ -250,12 +250,10 @@ def main():
             st.metric("Significance (-log₁₀ p)", f"{significance:.1f}")
         
         # Interpretation
-        if significance > 3:
-            st.success(f"🎯 **Highly significant correlation detected!** (σ = {significance:.1f})")
-        elif significance > 2:
-            st.warning(f"⚠️ **Moderate correlation** (σ = {significance:.1f})")
+        if significance >= 3:
+            st.success(f"🎯 **Very strong evidence for correlation** (σ = {significance:.1f})")
         else:
-            st.info(f"ℹ️ **No significant correlation** (σ = {significance:.1f})")
+            st.info(f"ℹ️ **Weak or no evidence** (σ = {significance:.1f})")
         
         # Sky map
         st.subheader("🗺️ Sky Distribution")
@@ -316,16 +314,14 @@ def main():
         1. **Spatial Cross-matching**: For each gamma-ray source, find all stellar sources within the search radius
         2. **Monte Carlo Simulation**: Generate random sky positions for gamma-ray sources and count matches
         3. **Statistical Significance**: Compare observed matches to random expectation
-        4. **P-value Calculation**: Fraction of random realizations with ≥ observed matches
         
         **Key Reference**: Peron et al. (2024), "On the correlation between young massive star clusters and gamma-ray unassociated sources", ApJ Letters
         """)
     
     with st.expander("Interpreting the results"):
         st.markdown("""
-        - **Significance > 3**: Very strong evidence for correlation (p < 0.001)
-        - **Significance 2-3**: Moderate evidence (0.001 < p < 0.01)  
-        - **Significance < 2**: Weak or no evidence (p > 0.01)
+        - **Significance ≥ 3**: Very strong evidence for correlation
+        - **Significance < 3**: Weak or no evidence
         
         The Monte Carlo simulation accounts for the non-uniform sky distribution and catalog selection effects.
         """)
