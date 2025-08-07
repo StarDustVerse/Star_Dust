@@ -130,70 +130,26 @@ def create_sky_map(matches_df, gamma_cat, source_cat):
 
 def generate_sample_data():
     #"""Generate sample gamma-ray and stellar catalogs"""
-    #np.random.seed(42)  # For reproducible results
+    p.random.seed(42)  # For reproducible results
     
     # Sample gamma-ray catalog (Fermi-LAT like)
-    #n_gamma = 50
-    #gamma_data = {
-    #    'name': [f'4FGL_J{i:04d}' for i in range(n_gamma)],
-    #    'ra': np.random.uniform(0, 360, n_gamma),
-    #    'dec': np.random.uniform(-30, 30, n_gamma),  # Limited Dec range for visibility
-    #    'flux': np.random.lognormal(0, 1, n_gamma),
-    #    'significance': np.random.uniform(5, 20, n_gamma)
-    #}
-    
-    # Sample stellar catalog (with some clustered near gamma sources for demo)
-    #n_sources = 200
-    #source_data = {
-    #    'name': [f'Star_{i:04d}' for i in range(n_sources)],
-    #    'ra': np.random.uniform(0, 360, n_sources),
-    #    'dec': np.random.uniform(-30, 30, n_sources),
-    #    'magnitude': np.random.normal(12, 3, n_sources),
-    #    'source_type': np.random.choice(['Star Cluster', 'HII Region', 'Star'], n_sources, p=[0.3, 0.3, 0.4])
-    #}
-
-    # --- Load Fermi-LAT (4FGL-DR4) Catalog ---
-    print("Querying Fermi-LAT catalog...")
-    fermi_catalog = FermiLAT.get_4fgl_catalog()
-    fermi_df = fermi_catalog.to_pandas()
-    
-    # Filter for a visible Dec range and top 50 sources by significance
-    fermi_df = fermi_df[(fermi_df['DEJ2000'] > -30) & (fermi_df['DEJ2000'] < 30)]
-    fermi_df = fermi_df.sort_values(by='Signif_Avg', ascending=False).head(50)
-    
+    n_gamma = 50
     gamma_data = {
-        'name': fermi_df['Source_Name'].tolist(),
-        'ra': fermi_df['RAJ2000'].tolist(),
-        'dec': fermi_df['DEJ2000'].tolist(),
-        'flux': fermi_df['Flux1000'].tolist(),  # Example flux column
-        'significance': fermi_df['Signif_Avg'].tolist()
+        'name': [f'4FGL_J{i:04d}' for i in range(n_gamma)],
+        'ra': np.random.uniform(0, 360, n_gamma),
+        'dec': np.random.uniform(-30, 30, n_gamma),  # Limited Dec range for visibility
+        'flux': np.random.lognormal(0, 1, n_gamma),
+        'significance': np.random.uniform(5, 20, n_gamma)
     }
     
-    # --- Load WISE Catalog (AllWISE) for a Sky Region ---
-    print("Querying WISE catalog (this may take a moment)...")
-    
-    # Choose a central coordinate (e.g., from a bright gamma source)
-    center_coord = SkyCoord(
-        ra=gamma_data['ra'][0] * u.deg,
-        dec=gamma_data['dec'][0] * u.deg,
-        frame='icrs'
-    )
-    
-    # Query a 2-degree radius region
-    wise_table = Irsa.query_region(center_coord, catalog="allwise_p3as_psd", spatial="Cone", radius=2 * u.deg)
-    
-    # Convert to DataFrame
-    wise_df = wise_table.to_pandas()
-    
-    # Sample 200 sources and extract required fields
-    wise_df = wise_df.sample(n=200, random_state=42)
-    
+     Sample stellar catalog (with some clustered near gamma sources for demo)
+    n_sources = 200
     source_data = {
-        'name': wise_df['designation'].tolist(),
-        'ra': wise_df['ra'].tolist(),
-        'dec': wise_df['dec'].tolist(),
-        'magnitude': wise_df['w1mpro'].tolist(),  # W1 band magnitude
-        'source_type': np.random.choice(['Star Cluster', 'HII Region', 'Star'], len(wise_df), p=[0.3, 0.3, 0.4])
+        'name': [f'Star_{i:04d}' for i in range(n_sources)],
+        'ra': np.random.uniform(0, 360, n_sources),
+        'dec': np.random.uniform(-30, 30, n_sources),
+        'magnitude': np.random.normal(12, 3, n_sources),
+        'source_type': np.random.choice(['Star Cluster', 'HII Region', 'Star'], n_sources, p=[0.3, 0.3, 0.4])
     }
 
     # Add some artificial correlations for demo
