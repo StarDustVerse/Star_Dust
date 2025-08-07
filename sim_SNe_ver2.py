@@ -2,8 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import matplotlib.patches as patches
-from matplotlib.animation import FFMpegWriter
-
 
 class ZoneLayerSupernova:
     def __init__(self, width=800, height=600, num_layers=5):
@@ -96,19 +94,14 @@ class ZoneLayerSupernova:
             interval=interval, blit=True
         )
 
-        if save:
-            writer = FFMpegWriter(fps=1000 // interval, metadata={'artist': 'SupernovaSim'}, bitrate=1800)
-            print("💾 Saving to supernova_simulation.mp4...")
-            self.ani.save("supernova_simulation.mp4", writer=writer)
-            print("✅ Saved as supernova_simulation.mp4")
-
         # Always display the live animation
         plt.tight_layout()
         plt.show()
-
+        plt.close(self.fig) 
 
 # Run the simulation and save as MP4
 if __name__ == "__main__":
     print("Starting supernova zone simulation with distinct colors...")
     sim = ZoneLayerSupernova(width=800, height=600, num_layers=5)
-    sim.run(frames=130, interval=50, save=True)
+    sim.run(frames=130, interval=50, save=False)
+
