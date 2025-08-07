@@ -20,7 +20,7 @@ st.markdown("""
 
 # --- Simulation Class ---
 class ZoneLayerSupernova:
-    def __init__(self, width=50, height=50, num_layers=5):
+    def __init__(self, width=5, height=5, num_layers=5):
         self.width = width
         self.height = height
         self.center = (width // 2, height // 2)
@@ -33,7 +33,7 @@ class ZoneLayerSupernova:
         self.zone_colors = ["#FFD700", "#FF8C00", "#FF4500", "#8B0000", "#4B0082"]
         self.base_radii = np.linspace(self.max_radius * 0.2, self.max_radius, num_layers)
 
-        self.fig, self.ax = plt.subplots(figsize=(2, 1))  # Smaller figure
+        self.fig, self.ax = plt.subplots(figsize=(6, 3))  # Smaller figure
         self.ax.set_xlim(0, width)
         self.ax.set_ylim(0, height)
         self.ax.set_aspect('equal')
@@ -115,6 +115,7 @@ if st.button("▶️ Play"):
     for f in range(0, 181, 20):  # auto-play frames without assigning 'frame'
         placeholder.pyplot(sim.draw_final_frame(f), use_container_width=True)
         time.sleep(speed / 1000.0)
+
 
 
 
