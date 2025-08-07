@@ -268,7 +268,7 @@ def main():
         with col1:
             fig_hist = px.histogram(
                 x=random_dist, 
-                bins=50,
+                nbins=50,
                 title="Monte Carlo Distribution of Random Matches",
                 labels={'x': 'Number of matches', 'y': 'Frequency'}
             )
@@ -328,6 +328,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
