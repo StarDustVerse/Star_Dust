@@ -89,10 +89,7 @@ class ZoneLayerSupernova:
         return self.layers + [self.info_text]
 
         def run(self, frames=200, interval=50):
-        self.ani = animation.FuncAnimation(
-            self.fig, self.update_layers, frames=frames,
-            interval=interval, blit=True
-        )
+            self.ani = animation.FuncAnimation(self.fig, self.update_layers, frames=frames,interval=interval, blit=True)
     
         plt.tight_layout()
         plt.close(self.fig) 
@@ -103,6 +100,7 @@ if __name__ == "__main__":
     print("Starting supernova zone simulation with distinct colors...")
     sim = ZoneLayerSupernova(width=800, height=600, num_layers=5)
     sim.run(frames=130, interval=50, save=False)
+
 
 
 
