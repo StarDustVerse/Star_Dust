@@ -2,15 +2,29 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-import matplotlib.animation as animation
 import time
+
+# --- Clean Layout: Remove Padding ---
+st.set_page_config(layout="wide")
+st.markdown("""
+    <style>
+        .block-container {
+            padding-top: 1rem;
+            padding-bottom: 0.5rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        header, footer {visibility: hidden;}
+    </style>
+""", unsafe_allow_html=True)
+
+# --- Simulation Class ---
 class ZoneLayerSupernova:
-    def __init__(self, width=10, height=10, num_layers=5):
+    def __init__(self, width=50, height=50, num_layers=5):
         self.width = width
         self.height = height
         self.center = (width // 2, height // 2)
         self.num_layers = num_layers
-        self.time = 0
         self.explosion_time = 50
         self.core_collapse_time = 30
         self.max_radius = min(width, height) // 2.5
@@ -19,7 +33,7 @@ class ZoneLayerSupernova:
         self.zone_colors = ["#FFD700", "#FF8C00", "#FF4500", "#8B0000", "#4B0082"]
         self.base_radii = np.linspace(self.max_radius * 0.2, self.max_radius, num_layers)
 
-        self.fig, self.ax = plt.subplots(figsize=(6, 4.5))
+        self.fig, self.ax = plt.subplots(figsize=(3, 2.2))  # Smaller figure
         self.ax.set_xlim(0, width)
         self.ax.set_ylim(0, height)
         self.ax.set_aspect('equal')
@@ -27,40 +41,34 @@ class ZoneLayerSupernova:
 
         self.layers = []
         for i in range(num_layers):
-            color = self.zone_colors[i % len(self.zone_colors)]
             circle = patches.Circle(
                 self.center,
                 radius=self.base_radii[i],
-                facecolor=color,
+                facecolor=self.zone_colors[i % len(self.zone_colors)],
                 edgecolor='none',
                 alpha=0.6
             )
             self.ax.add_patch(circle)
             self.layers.append(circle)
 
-        self.title = self.ax.set_title('Core collapse Supernova Simulation', fontsize=5, color='white')
-        self.info_text = self.ax.text(
-            0.02, 0.98, '', transform=self.ax.transAxes,
-            fontsize=10, color='white', verticalalignment='top'
-        )
+        self.title = self.ax.set_title('Core Collapse Supernova', fontsize=6, color='white')
+        self.info_text = self.ax.text(0.02, 0.98, '', transform=self.ax.transAxes,
+                                      fontsize=5, color='white', va='top')
 
     def update_layers(self, frame):
-        self.time = frame
         if frame == 0:
             self.explosion_started = False
             for i, circle in enumerate(self.layers):
                 circle.set_radius(self.base_radii[i])
                 circle.set_alpha(0.6)
-                circle.set_facecolor(self.zone_colors[i % len(self.zone_colors)])
 
-        if self.time < self.core_collapse_time:
+        if frame < self.core_collapse_time:
             phase = "Core Collapse"
             progress = 1 - (frame / self.core_collapse_time) * 0.7
             for i, circle in enumerate(self.layers):
-                radius = self.base_radii[i] * progress
-                circle.set_radius(radius)
+                circle.set_radius(self.base_radii[i] * progress)
 
-        elif self.time < self.explosion_time:
+        elif frame < self.explosion_time:
             phase = "Critical Moment"
             for i, circle in enumerate(self.layers):
                 circle.set_radius(self.base_radii[i] * 0.3)
@@ -79,43 +87,30 @@ class ZoneLayerSupernova:
                 circle.set_radius(radius)
                 circle.set_alpha(0.6 * fade)
 
-        info = f"Phase: {phase}\nFrame: {frame}"
-        self.info_text.set_text(info)
+        self.info_text.set_text(f"{phase} | Frame {frame}")
 
     def draw_final_frame(self, frame):
         self.update_layers(frame)
         plt.tight_layout()
         return self.fig
 
-# --- Streamlit App ---
-st.set_page_config(layout="wide")
-st.title("💥 Supernova Zone Layer Simulation")
+# --- Streamlit App Layout ---
+st.markdown("### 💥 Supernova Simulation")
 
-st.markdown("This interactive simulation models the stages of a 1D supernova explosion using concentric layers.")
-
-
-col1, col2 = st.columns([1, 1])
+col1, col2 = st.columns(2)
 
 with col1:
-    num_layers = st.slider("Number of Layers", 2, 10, 5)
+    num_layers = st.slider("Layers", 2, 10, 5, label_visibility="collapsed")
 
 with col2:
-    speed = st.slider("Frame Interval (ms)", 10, 200, 50)
+    speed = st.slider("Speed (ms)", 10, 200, 50, label_visibility="collapsed")
 
-if st.button("▶️ Play Simulation"):
+# Animation with frame skipping
+if st.button("▶️ Play"):
     placeholder = st.empty()
     sim = ZoneLayerSupernova(num_layers=num_layers)
 
-    for frame in range(0, 181, 8):   # frames 0 to 180
+    for frame in range(0, 181, 20):  # Show every 20th frame
         fig = sim.draw_final_frame(frame)
-        placeholder.pyplot(fig)
-        time.sleep(0.05)  
-
-
-
-
-
-
-
-
-
+        placeholder.pyplot(fig, use_container_width=True)
+        time.sleep(speed / 0.5)
