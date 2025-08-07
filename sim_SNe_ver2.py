@@ -5,7 +5,7 @@ import matplotlib.patches as patches
 import matplotlib.animation as animation
 import time
 class ZoneLayerSupernova:
-    def __init__(self, width=50, height=50, num_layers=5):
+    def __init__(self, width=10, height=10, num_layers=5):
         self.width = width
         self.height = height
         self.center = (width // 2, height // 2)
@@ -19,7 +19,7 @@ class ZoneLayerSupernova:
         self.zone_colors = ["#FFD700", "#FF8C00", "#FF4500", "#8B0000", "#4B0082"]
         self.base_radii = np.linspace(self.max_radius * 0.2, self.max_radius, num_layers)
 
-        self.fig, self.ax = plt.subplots(figsize=(2, 1))
+        self.fig, self.ax = plt.subplots(figsize=(6, 4.5))
         self.ax.set_xlim(0, width)
         self.ax.set_ylim(0, height)
         self.ax.set_aspect('equal')
@@ -110,6 +110,7 @@ if st.button("▶️ Play Simulation"):
         fig = sim.draw_final_frame(frame)
         placeholder.pyplot(fig)
         time.sleep(0.05)  
+
 
 
 
