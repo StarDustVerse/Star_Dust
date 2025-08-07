@@ -19,7 +19,7 @@ class ZoneLayerSupernova:
         self.zone_colors = ["#FFD700", "#FF8C00", "#FF4500", "#8B0000", "#4B0082"]
         self.base_radii = np.linspace(self.max_radius * 0.2, self.max_radius, num_layers)
 
-        self.fig, self.ax = plt.subplots(figsize=(12, 9))
+        self.fig, self.ax = plt.subplots(figsize=(6, 4.5))
         self.ax.set_xlim(0, width)
         self.ax.set_ylim(0, height)
         self.ax.set_aspect('equal')
@@ -100,3 +100,4 @@ if st.button("Render Simulation Frame"):
     sim = ZoneLayerSupernova(num_layers=num_layers)
     fig = sim.draw_final_frame(final_frame)
     st.pyplot(fig)
+
