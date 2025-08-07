@@ -142,7 +142,7 @@ def generate_sample_data():
         'significance': np.random.uniform(5, 20, n_gamma)
     }
     
-     Sample stellar catalog (with some clustered near gamma sources for demo)
+    #Sample stellar catalog (with some clustered near gamma sources for demo)
     n_sources = 200
     source_data = {
         'name': [f'Star_{i:04d}' for i in range(n_sources)],
@@ -328,4 +328,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
