@@ -100,12 +100,13 @@ with col1:
     num_layers = st.slider("Number of Layers", 2, 10, 5)
 
 with col2:
-    final_frame = st.slider("Simulation Frame", 0, 360, 180)
+    speed = st.slider("Frame Interval (ms)", 10, 200, 50)
 
 if st.button("Render Simulation Frame"):
     sim = ZoneLayerSupernova(num_layers=num_layers)
     fig = sim.draw_final_frame(final_frame)
     st.pyplot(fig)
+
 
 
 
