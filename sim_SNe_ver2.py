@@ -5,7 +5,7 @@ import matplotlib.patches as patches
 import matplotlib.animation as animation
 
 class ZoneLayerSupernova:
-    def __init__(self, width=200, height=200, num_layers=5):
+    def __init__(self, width=50, height=50, num_layers=5):
         self.width = width
         self.height = height
         self.center = (width // 2, height // 2)
@@ -38,7 +38,7 @@ class ZoneLayerSupernova:
             self.ax.add_patch(circle)
             self.layers.append(circle)
 
-        self.title = self.ax.set_title('Supernova Zone Layer Simulation', fontsize=16, color='white')
+        self.title = self.ax.set_title('Supernova Zone Layer Simulation', fontsize=5, color='white')
         self.info_text = self.ax.text(
             0.02, 0.98, '', transform=self.ax.transAxes,
             fontsize=10, color='white', verticalalignment='top'
@@ -93,12 +93,19 @@ st.title("💥 Supernova Zone Layer Simulation")
 
 st.markdown("This interactive simulation models the stages of a 1D supernova explosion using concentric layers.")
 
-num_layers = st.slider("Number of Layers", 2, 10, 5)
-final_frame = st.slider("Simulation Frame to Display", 0, 360, 180)
+
+col1, col2 = st.columns([1, 1])  # Equal width columns (you can tweak to [1, 2], etc.)
+
+with col1:
+    num_layers = st.slider("Number of Layers", 2, 10, 5)
+
+with col2:
+    final_frame = st.slider("Simulation Frame", 0, 360, 180)
 
 if st.button("Render Simulation Frame"):
     sim = ZoneLayerSupernova(num_layers=num_layers)
     fig = sim.draw_final_frame(final_frame)
     st.pyplot(fig)
+
 
 
